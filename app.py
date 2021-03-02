@@ -64,7 +64,8 @@ app.layout = html.Div([
         dcc.Dropdown(
             id="dropdown-graph",
             options=[{"label": graph, "value": graph} 
-                    for graph in ('Line','Box')],
+                    for graph in ('Line','Box','Box 3 dias', 'Box por hora - 3 dias','Box por hora - Dia 24',
+                    'Box por hora - Dia 25','Box por hora - Dia 26')],
             value='Line'
         ),
 
@@ -161,8 +162,33 @@ def update_graph(value):
     if value == 'Line':
         fig = px.line(df, x=df.index.values, y=df['Values'], color=df['day'],  labels = {'x':'Hours', 'y':'Values'})
         return fig
-    else:
+    
+    elif value == 'Box':
         fig = px.box(df, y='Values')
+        return fig
+    
+    elif value == 'Box 3 dias':
+        fig = px.box(df, y='Values', color='day')
+        return fig
+            
+    elif value == 'Box por hora - 3 dias':
+        df['hour'] = df.index.hour
+        fig = px.box(df, y='Values', color='hour')
+        return fig
+    
+    elif value == 'Box por hora - Dia 24':
+        df['hour'] = df.index.hour
+        fig = px.box(df[df.index.day == 24], y='Values', color='hour')
+        return fig
+    
+    elif value == 'Box por hora - Dia 25':
+        df['hour'] = df.index.hour
+        fig = px.box(df[df.index.day == 25], y='Values', color='hour')
+        return fig
+    
+    elif value == 'Box por hora - Dia 26':
+        df['hour'] = df.index.hour
+        fig = px.box(df[df.index.day == 26], y='Values', color='hour')
         return fig
     
 
